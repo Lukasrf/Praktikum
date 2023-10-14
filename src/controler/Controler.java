@@ -23,5 +23,4 @@ public class Controler {
     public static void setgamestatus(){
         d.setGameplay();
     }
-
 }
