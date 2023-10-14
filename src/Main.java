@@ -1,19 +1,17 @@
+import controler.Controler;
+import model.Data;
+import view.CustomTableModel;
+import view.TableJButton2Editor;
+import view.TableJButton2Renderer;
+import view.View;
+
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        JFrame frame=new JFrame("welcome");
-        int size =Integer.parseInt(JOptionPane.showInputDialog(frame,"Enter Game size"));
-        CustomTableModel model=new CustomTableModel(size);
-        JTable table=new JTable(model);
-        JScrollPane js=new JScrollPane(table);
-        for(int i=0;i<size;i++){
-            table.getColumnModel().getColumn(i).setCellRenderer(new TableJButton2Renderer());
-            table.getColumnModel().getColumn(i).setCellEditor(new TableJButton2Editor());
+        View view=new View(4);
+        Data data=new Data(4);
+        Controler controler=new Controler(view,data);
+
         }
-        frame.add(js);
-        frame.setVisible(true);
-        frame.pack();
     }
-}

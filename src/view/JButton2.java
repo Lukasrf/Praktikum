@@ -1,3 +1,5 @@
+package view;
+
 import javax.swing.*;
 
 public class JButton2 extends JButton {

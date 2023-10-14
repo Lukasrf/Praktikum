@@ -1,3 +1,7 @@
+package view;
+
+import controler.Controler;
+
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.table.TableCellEditor;
@@ -9,6 +13,7 @@ import java.util.EventObject;
 public class TableJButton2Editor implements TableCellEditor {
     JButton2 button2=new JButton2();
     public TableJButton2Editor(){
+
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -20,6 +25,8 @@ public class TableJButton2Editor implements TableCellEditor {
     public Component getTableCellEditorComponent(JTable jTable, Object o, boolean b, int i, int i1) {
         JButton2 modelbutton=(JButton2)o;
         modelbutton.setText("clicked");
+        Controler.set(i,i1);
+        System.out.println("grid status of ["+i+"]["+i1+"]"+" is "+Controler.get(i,i1));
         return modelbutton;
     }
 
