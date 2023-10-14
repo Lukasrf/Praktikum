@@ -10,7 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class BackgroundFrame extends JFrame {
-    boolean cancelstatus = false;
+    public boolean cancelstatus = false;
 
     public BackgroundFrame() {
         setTitle("Background Image Frame");

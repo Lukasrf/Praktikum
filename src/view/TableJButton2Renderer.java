@@ -7,6 +7,8 @@ import java.awt.*;
 public class TableJButton2Renderer extends JButton2 implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable jTable, Object o, boolean b, boolean b1, int i, int i1) {
+        //this.setBorderPainted(false);
+        //this.setContentAreaFilled(false);
         this.setText(o.toString());
         return this;
     }

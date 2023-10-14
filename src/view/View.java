@@ -10,11 +10,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class View extends JComponent{
-
-    BackgroundFrame frame;
+    public BackgroundFrame bf;
     public View(int size){
-            frame=new BackgroundFrame();
-
+         BackGroundFrameTable bt=new BackGroundFrameTable(4);
         }
   }
 

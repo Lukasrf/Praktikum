@@ -22,7 +22,7 @@ public class CustomTableModel extends AbstractTableModel {
         for(int i=0;i<size;i++){
             columnName[i]=letters[i];
             for(int j=0;j<size;j++){
-                data[i][j]=new JButton2("UNCLICKED");
+                data[i][j]=new JButton2();
             }
         }
     }
