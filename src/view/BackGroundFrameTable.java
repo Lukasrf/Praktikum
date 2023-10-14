@@ -8,11 +8,13 @@ import java.awt.event.ComponentEvent;
 public class BackGroundFrameTable extends JFrame {
 
     public BackGroundFrameTable(int size){
+        Dimension x=new Dimension(200,200);
+        setMinimumSize(x);
         setLayout(new GridBagLayout());
         GridBagConstraints frameConstraints = new GridBagConstraints();
         frameConstraints.fill = GridBagConstraints.BOTH;
         frameConstraints.weightx = 1.0;  // Give component the entire horizontal space
-        frameConstraints.weighty = 1.0;
+        frameConstraints.weighty = 1.0;  // Give component the entire vertical  space
         JPanel backgroundImagePanel = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -29,12 +31,13 @@ public class BackGroundFrameTable extends JFrame {
         //JScrollPane js=new JScrollPane(table);
         for(int i=0;i<size;i++){
             table.getColumnModel().getColumn(i).setCellEditor(new TableJButton2Editor());
+            table.getColumnModel().getColumn(i).setPreferredWidth(table.getRowHeight());
             table.getColumnModel().getColumn(i).setCellRenderer(new TableJButton2Renderer());
         }
         GridBagConstraints tableConstraints=new GridBagConstraints();
         tableConstraints.fill = GridBagConstraints.BOTH;
-        tableConstraints.weightx = 1.0;
-        tableConstraints.weighty = 1.0;
+        tableConstraints.weightx = 1.0; // Give component the entire horizontal space
+        tableConstraints.weighty = 1.0; // Give component the entire vertical  space
         backgroundImagePanel.add(table,tableConstraints);
         this.add(backgroundImagePanel,frameConstraints);
         this.addComponentListener(new ComponentAdapter() {

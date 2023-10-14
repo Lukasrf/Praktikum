@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 
 /**
  * Class used as the table model for the grid<br>
@@ -22,7 +23,8 @@ public class CustomTableModel extends AbstractTableModel {
         for(int i=0;i<size;i++){
             columnName[i]=letters[i];
             for(int j=0;j<size;j++){
-                data[i][j]=new JButton2();
+                data[i][j]= new JButton2();
+                data[i][j].setPreferredSize(new Dimension(40,40));
             }
         }
     }
