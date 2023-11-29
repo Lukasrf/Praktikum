@@ -1,6 +1,7 @@
 package controler;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
@@ -26,7 +27,15 @@ public class Client {
 
         chatArea = new JTextArea();
         chatArea.setEditable(false);
+
+        // Setze die bevorzugte Größe für die JScrollPane
         JScrollPane scrollPane = new JScrollPane(chatArea);
+        scrollPane.setPreferredSize(new Dimension(450, 150)); // Hier kannst du die Größe anpassen
+
+        // Auto-Scrolling für den Chat-Bereich
+        DefaultCaret caret = (DefaultCaret)chatArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
         frame.getContentPane().add(scrollPane, BorderLayout.SOUTH);
 
         JPanel gridPanel = new JPanel(new GridLayout(10, 10)); // 10x10 Grid
