@@ -1,14 +1,14 @@
 package controler;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.*;
 import java.net.*;
 
 public class Server {
     private JFrame frame;
-    private JTextField messageField;
-    private JButton sendButton;
+    private JButton[][] gridButtons;
     private JTextArea chatArea;
     private PrintWriter out;
     private BufferedReader in;
@@ -20,35 +20,77 @@ public class Server {
 
     private void initialize() {
         frame = new JFrame("PingPong Server");
-        frame.setBounds(100, 100, 500, 300);
+        frame.setBounds(100, 100, 500, 500); // Geänderte Größe
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
-
-        messageField = new JTextField();
-        messageField.setBounds(10, 230, 350, 20);
-        frame.getContentPane().add(messageField);
-        messageField.setColumns(10);
-
-        sendButton = new JButton("Send");
-        sendButton.setBounds(370, 230, 100, 20);
-        frame.getContentPane().add(sendButton);
+        frame.getContentPane().setLayout(new BorderLayout());
 
         chatArea = new JTextArea();
         chatArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatArea);
-        scrollPane.setBounds(10, 10, 460, 210);
-        frame.getContentPane().add(scrollPane);
+        frame.getContentPane().add(scrollPane, BorderLayout.SOUTH);
+
+        JPanel gridPanel = new JPanel(new GridLayout(10, 10)); // 10x10 Grid
+        gridButtons = new JButton[10][10];
+        for (int i = 0; i < gridButtons.length; i++) {
+            for (int j = 0; j < gridButtons[i].length; j++) {
+                gridButtons[i][j] = new JButton();
+                int finalI = i;
+                int finalJ = j;
+                gridButtons[i][j].addActionListener(e -> handleButtonPress(finalI, finalJ));
+                gridPanel.add(gridButtons[i][j]);
+            }
+        }
+        frame.getContentPane().add(gridPanel, BorderLayout.CENTER);
 
         setUpNetworking();
         Thread readerThread = new Thread(this::readMessages);
         readerThread.start();
+    }
 
-        sendButton.addActionListener(e -> {
-            if (canSend) {
-                sendMessage();
-                canSend = false;
+    private void handleButtonPress(int x, int y) {
+        if (canSend) {
+            sendMessage("shot " + x + " " + y);
+            canSend = false;
+        }
+    }
+
+    private void sendMessage(String message) {
+        out.println(message);
+        chatArea.append("Server: " + message + "\n"); // Nachricht in chatArea hinzufügen
+    }
+
+
+    private void readMessages() {
+        String message;
+        try {
+            while ((message = in.readLine()) != null) {
+                handleReceivedMessage(message);
             }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleReceivedMessage(String message) {
+        chatArea.append("From Client: " + message + "\n");
+        if (message.startsWith("shot")) {
+            String[] parts = message.split(" ");
+            int x = Integer.parseInt(parts[1]);
+            int y = Integer.parseInt(parts[2]);
+
+            if (y == 0) { // Alle Felder mit y = 0 sind Schiffe
+                sendMessage("hit");
+            } else {
+                sendMessage("miss");
+            }
+        } else if (message.equals("hit")) {
+            canSend = true;
+        } else if (message.equals("miss")) {
+            sendMessage("done");
+            canSend = false;
+        } else if (message.equals("done")) {
+            canSend = true;
+        }
     }
 
     private void setUpNetworking() {
@@ -62,24 +104,6 @@ public class Server {
         }
     }
 
-    private void readMessages() {
-        String message;
-        try {
-            while ((message = in.readLine()) != null) {
-                chatArea.append("Client: " + message + "\n");
-                canSend = true;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sendMessage() {
-        String message = messageField.getText();
-        chatArea.append("Server: " + message + "\n");
-        out.println(message);
-        messageField.setText("");
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
