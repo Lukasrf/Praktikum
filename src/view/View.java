@@ -1,18 +1,16 @@
-package view;
+package View;
 
-import controler.Controler;
+public class View {
+        StartFrame startFrame;
+        public View(){
+               this.startFrame=new StartFrame();
+               if(startFrame.getOptionBeenden()==0){
+                       this.startFrame.dispose();
+                       AuswahlFrame spielAuswahlFrame=new AuswahlFrame();
+               }
+                }
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.text.BoxView;
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
-
-public class View extends JComponent{
-    public BackgroundFrame bf;
-    public View(int size){
-         BackGroundFrameTable bt=new BackGroundFrameTable(4);
+        public int getteroption(){
+                return startFrame.getOptionBeenden();
         }
-  }
-
+}

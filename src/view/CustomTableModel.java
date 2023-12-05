@@ -1,7 +1,6 @@
-package view;
+package View;
 
 import javax.swing.table.AbstractTableModel;
-import java.awt.*;
 
 /**
  * Class used as the table model for the grid<br>
@@ -11,7 +10,7 @@ public class CustomTableModel extends AbstractTableModel {
 
     String[] letters={"A","B","C","D","E","F","G","H","J"};
     String[] columnName;
-    JButton2[][] data;
+    JButtonB[][] data;
     /**
      * The constructor of the Table Model <br>
      *
@@ -19,12 +18,12 @@ public class CustomTableModel extends AbstractTableModel {
      */
     public CustomTableModel(int size){
         columnName=new String[size];
-        data=new JButton2[size][size];
+        data=new JButtonB[size][size];
         for(int i=0;i<size;i++){
             columnName[i]=letters[i];
             for(int j=0;j<size;j++){
-                data[i][j]= new JButton2();
-                data[i][j].setPreferredSize(new Dimension(40,40));
+                data[i][j]= new JButtonB();
+
             }
         }
     }

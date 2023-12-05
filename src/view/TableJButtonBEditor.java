@@ -1,6 +1,4 @@
-package view;
-
-import controler.Controler;
+package View;
 
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
@@ -10,29 +8,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
 
-public class TableJButton2Editor implements TableCellEditor {
-    JButton2 button2=new JButton2();
-    public TableJButton2Editor(){
+public class TableJButtonBEditor implements TableCellEditor {
+    JButtonB modelbutton;
+    ActionListener e1=new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            modelbutton.setText(modelbutton.getText()+"1");
+        }
+    };
 
-        button2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                stopCellEditing();
-            }
-        });
+    public TableJButtonBEditor(){
     }
     @Override
     public Component getTableCellEditorComponent(JTable jTable, Object o, boolean b, int i, int i1) {
-        JButton2 modelbutton=(JButton2)o;
-        modelbutton.setText("clicked");
-        Controler.set(i,i1);
-        System.out.println("grid status of ["+i+"]["+i1+"]"+" is "+Controler.get(i,i1));
+        this.modelbutton = (JButtonB) o;
+        modelbutton.hit = true;
+        modelbutton.addActionListener(e1);
         return modelbutton;
     }
 
     @Override
     public Object getCellEditorValue() {
-        return button2.getText();
+        return modelbutton.getText();
     }
 
     @Override
@@ -52,7 +49,6 @@ public class TableJButton2Editor implements TableCellEditor {
 
     @Override
     public void cancelCellEditing() {
-
     }
 
     @Override
@@ -62,6 +58,5 @@ public class TableJButton2Editor implements TableCellEditor {
 
     @Override
     public void removeCellEditorListener(CellEditorListener cellEditorListener) {
-
     }
 }
